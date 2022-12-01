@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+
+
+
+
+<script type="text/javascript">
+	let arr = [1,2,3,4]
+
+	function array2list(ary) {
+    if(ary.length === 0) {
+        return null
+    }
+    var nodes = []
+    
+    for(var i = 0; i < ary.length; i++) {
+        var node = {}
+        node.value = ary[i]
+        node.next = null
+        nodes.push(node)
+    }
+
+    // for(var i = 0; i < nodes.length - 1; i++) {
+    //     nodes[i].next = nodes[i + 1]
+    // }
+
+    return nodes[0]
+}
+	console.log('====>', array2list(arr))
+</script>
+</body>
+</html>

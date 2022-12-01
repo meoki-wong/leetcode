@@ -1,0 +1,184 @@
+<!-- <!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+
+
+
+<script type="text/javascript">
+    
+ /**
+ * @param {string} s
+ * @return {number}
+ */
+var lengthOfLongestSubstring = function(s) {
+    let i = 0, j = 1, dp = [1], len = s.length, map = new Map(), max = 0;
+    if(len === 1) return 1;
+    map.set(s[0], 0);
+    while(j < len) {
+        // 哈希表存储每个字母对应的最后出现索引处
+        i = map.get(s[j]);
+        i = i === undefined ? -1 : i;
+        map.set(s[j], j);
+        // 如果dp数组前一个存储的最大长度
+        dp[j] = dp[j - 1] < j - i ? dp[j - 1] + 1 : j - i;
+
+        max = Math.max(dp[j], max);
+        j++;
+    }
+    return max;
+};
+
+/**
+ * @param {string} s
+ * @return {number}
+ */
+var lengthOfLongestSubstring = function(s) {
+    let i = -1, j = 0, len = s.length, map = new Map(), max = 0;
+    if(len === 1) return 1;
+
+    while(j < len) {
+        if(map.get(s[j]) || map.get(s[j]) === 0) {
+            i = Math.max(map.get(s[j]), i); // 将该字符上一次出现的索引处，与上轮的i 作比较，取大的那个
+        }
+        map.set(s[j], j);
+        max = Math.max(max, j - i);
+        j++;
+    }
+
+    return max;
+};
+
+
+
+</script>
+
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+</head>
+
+<body>
+
+
+    <script type="text/javascript">
+
+
+
+
+        /**
+         * 100 155 1000 1555 5555 10000
+        */
+
+        /**
+     * @param {number} n
+     * @return {number}
+     */
+        var countDigitOne = function (n) {
+            let cutt = 1
+            let numLen = 0
+            let cutNum = 1
+            let cloneNum = n
+            let mostNum  // 存储最高位的数
+
+            console.time('global')
+            while (cloneNum >= 10) {
+                let forkNum = cloneNum
+                if (n > 10) { // 当位数大于10   采用分段方法取值
+
+
+                    while (forkNum >= 1) {
+                        forkNum = forkNum / 10
+                        ++numLen
+                        if (1 <= forkNum && forkNum <= 10) { // 取传入数据最高位存储
+                            mostNum = parseInt(forkNum)
+                        }
+                    }
+                    for (let i = 1; i < numLen; i++) {
+                        cutNum *= 10
+                    }
+                    // 整数逻辑判断过程  明天此处着重封装
+                    if (mostNum !== 1) { // 最高位不等于1的情况  排除10  100  1000...
+                        cutt += ((numLen * mostNum) + (10 - mostNum)) * (10 ** (numLen - 2))
+                        if (n - cutNum * mostNum > 0) { // 传入数据大于最高位等值整数时
+                        } else { // 传入数据等于最高位等值整数时
+                            cutt = cutt - 1
+                        }
+                    }
+                    else { // 最高位等于1的情况  (此处下午着重封装  目前最开始为1的情况下  计算有问题)
+                        let cloneCutt
+                        // 最高位为1的情况下  计算整数的1有多少
+                        if (cloneNum === 10) {
+                            cutt -= 1
+                        } else {
+                            cutt += (cloneNum - 10 ** (numLen - 1))
+                        }
+                        cloneCutt = numLen - 1
+                        for (let i = 0; i < numLen - 2; i++) {
+                            cloneCutt *= 10
+                        }
+
+                        if (n - cutNum * mostNum > 0) { // 传入数据大于最高位等值整数时
+                            cutt += cloneCutt + 1
+                        } else { // 传入数据等于最高位等值整数时
+                            cutt += cloneCutt
+                        }
+                    }
+                } else { // 输入 n 小于等于10的情况
+                    if (n === 10) {
+                        cutt = 2
+                    }
+                    if (0 < n && n < 10) {
+                        cutt = 1
+                    }
+                }
+                cloneNum = cloneNum - cutNum * mostNum
+                cutNum = 1
+                numLen = 0
+            }
+
+
+            if (n === 10) {
+                cutt = 2
+            }
+            if (0 < n && n < 10) {
+                cutt = 1
+            }
+            console.timeEnd('global')
+            return cutt
+        };
+
+        // 824883294
+        // 767944060
+
+        // 84857
+        // 44476
+
+
+        // 600000
+        // 400000
+
+        // 1410065408
+        // 1737167499
+
+
+        // 182488329
+        // 231033903
+
+
+        // 241006540
+        // 298609555
+        console.log('-----', countDigitOne(10000))
+        // console.log('-----', countDigitOne(21410065408) - countDigitOne(20000000000))
+        // console.log('-----', countDigitOne(5000))
+    </script>
+</body>
+
+</html>
